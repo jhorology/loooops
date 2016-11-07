@@ -5,8 +5,9 @@
 #   - data
 #     object or function to provide metadata
 #   - data.name        String
-#   - data.vendor      String
 #   - data.author      String
+#   - data.vendor      String
+#   - data.comment     String
 #   - data.bankchain   Array of String
 #   - data.types       2 dimensional Array of String
 #   - data.modes       Array of String (currently unsupported)
@@ -141,12 +142,14 @@ _build_geob_frame = (metadata) ->
     .pushHex '020000000100000000000000'
     # sample name
     .pushUcs2String metadata.name
-    # vendor name
-    .pushUcs2String metadata.vendor
     # author name
     .pushUcs2String metadata.author
+    # vendor name
+    .pushUcs2String metadata.vendor
+    # comment
+    .pushUcs2String metadata.comment
     # unknown, It seems all expansions sample are same.
-    .pushHex '0000000000000000ffffffffffffffff000000000000000000000000000000000000000001000000'
+    .pushHex '00000000ffffffffffffffff000000000000000000000000000000000000000001000000'
     # bankchain
     .pushUcs2StringArray metadata.bankchain
     # types (category)

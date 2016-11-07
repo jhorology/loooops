@@ -93,10 +93,11 @@ gulp.task "deploy-#{$.suffix}", ["clean-deployed-#{$.suffix}"], ->
       types.push 'Unknown' unless types.length
       # return metadata
       name: name
-      vendor: 'Apple'
       author: author
+      vendor: 'Apple'
+      comment: apple.information?.comments
       bankchain: ['Apple Loops', bank]
       types: [types]
       modes: apple.meta?.descriptors
     .pipe gulp.dest $.deploy
-    .pipe tap -> bar.tick 1 ,cur: ++count
+    .pipe tap -> bar.tick 1, cur: ++count
