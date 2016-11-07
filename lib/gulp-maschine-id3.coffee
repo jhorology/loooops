@@ -20,8 +20,8 @@
 #          - data  Buffer contents of chunk
 #     - callback function(err, metadata)
 #       callback function to support non-blocking call.
-# 
-# - Usage 
+#
+# - Usage
 #     id3 = require './lib/gulp-maschine-id3'
 #     gulp.task 'hoge', ->
 #       gulp.src ["src/**/*.wav"]
@@ -36,7 +36,7 @@
 #           modes: ['weird', 'dirty', 'insane', 'ugly']
 #         .pipe gulp.dest "dist"
 #
-# 
+#
 assert       = require 'assert'
 through      = require 'through2'
 gutil        = require 'gulp-util'
