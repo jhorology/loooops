@@ -107,6 +107,7 @@ gulp.task 'deploy-apple-loops', ->
       types = []
       types.push apple.meta.category if apple.meta?.category
       types.push apple.meta.subcategory if apple.meta?.subcategory
+      types.push 'Unknown' unless types.length
       # return metadata
       name: name
       vendor: 'Apple'
