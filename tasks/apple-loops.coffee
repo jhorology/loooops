@@ -3,12 +3,12 @@ gulp     = require 'gulp'
 shell    = require 'shelljs'
 progress = require 'smooth-progress'
 run      = require 'run-sequence'
-meta     = require 'apple-loops-meta-reader'
 exec     = require 'gulp-exec'
 tap      = require 'gulp-tap'
 rename   = require 'gulp-rename'
+meta     = require 'apple-loops-meta-reader'
+id3      = require 'gulp-maschine-id3'
 util     = require '../lib/util'
-id3      = require '../lib/gulp-maschine-id3'
  
 # ======================================================
 #  paths, misc settings

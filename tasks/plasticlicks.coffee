@@ -7,8 +7,8 @@ run      = require 'run-sequence'
 tap      = require 'gulp-tap'
 rename   = require 'gulp-rename'
 unzip    = require 'gulp-unzip'
+id3      = require 'gulp-maschine-id3'
 util     = require '../lib/util'
-id3      = require '../lib/gulp-maschine-id3'
 
 $ = Object.assign {}, (require '../config'),
   suffix: path.basename __filename, '.coffee'
