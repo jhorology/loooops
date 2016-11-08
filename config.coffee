@@ -8,3 +8,9 @@ module.exports =
     err: true              # default = true, false means don't write err
     stderr: true           # default = true, false means don't write stderr
     stdout: true           # default = true, false means don't write stdout
+
+  # Native Instruments
+  #-------------------------------------------
+  NI:
+    userContent: "#{process.env.HOME}/Documents/Native Instruments/User Content"
+    resources: '/Users/Shared/NI Resources'

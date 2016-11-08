@@ -26,4 +26,4 @@ module.exports =
         "unzip -l '#{dir}' | grep '#{ext}' | wc -l"
       else
         "find '#{dir}' -name '*#{ext}' | wc -l"
-    parseInt (shell.exec cmd, silent: off).stdout
+    parseInt (shell.exec cmd, silent: on).stdout

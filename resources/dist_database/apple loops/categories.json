@@ -1,0 +1,11 @@
+{
+    "Vendor" : "Apple",
+    "Product" : "Apple Loops",
+    "CategoryDB" :
+    [
+        {
+            "FileType" : "Samples",
+            "Categories" : []
+        }
+    ]
+}
