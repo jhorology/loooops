@@ -1,5 +1,6 @@
 _        = require 'underscore'
 fs       = require 'fs'
+path     = require 'path'
 beautify = require 'js-beautify'
 shell    = require 'shelljs'
 $        = require '../config'
@@ -19,4 +20,10 @@ module.exports =
     JSON.parse buf.toString()
 
   countFiles: (dir, ext) ->
-    parseInt ((shell.exec "find '#{dir}' -name '*#{ext}' | wc -l", silent: on).stdout);
+    extArchive = path.extname dir
+    cmd = switch extArchive.toLowerCase()
+      when '.zip'
+        "unzip -l '#{dir}' | grep '#{ext}' | wc -l"
+      else
+        "find '#{dir}' -name '*#{ext}' | wc -l"
+    parseInt (shell.exec cmd, silent: off).stdout
