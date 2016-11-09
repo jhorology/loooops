@@ -1,6 +1,5 @@
-# D16 Group Audio Software
-# Plasticlicks - Drum Sounds Collection
-#   - 6444 wav files
+# iZotope iris 2 sample Library
+#   - 4568 wav files
 #-------------------------------------------------- 
 path     = require 'path'
 zlib     = require 'zlib'
@@ -17,10 +16,10 @@ util     = require '../lib/util'
 $ = Object.assign {}, (require '../config'),
   suffix: path.basename __filename, '.coffee'
 
-  vendor: 'D16 Group Audio Software'
-  package: 'Plasticlicks'
-  src: '/Volumes/Macintosh HD/Apps/DAW/D16/Plasticlicks - Drum Sounds Collection/Wave files and Akai programs.zip'
-  samples: '/Volumes/Macintosh HD/Music/Samples/D16 Group Audio Software/Plasticlicks'
+  vendor: 'iZotope'
+  package: 'Iris 2 Library'
+  src: '/Library/Application Support/iZotope/Iris 2/Iris 2 Library/Samples'
+  samples: '/Volumes/Macintosh HD/Music/Samples/iZotope/Iris 2 Library'
 
 # deploy sample files.
 # --------------------------------
@@ -31,21 +30,30 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
     total: numFiles
     tmpl: "Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
     width: 40
-  gulp.src $.src
-    .pipe unzip {filter: (entry) -> entry.path[-4..] is '.wav'}
+  gulp.src ["#{$.src}/**/*.wav"]
     .pipe id3 (file, chunks) ->
-      # remove heading "Plasticlicks/"
-      file.path = file.path.replace /^Plasticlicks\//, ''
-      basename = path.basename file.path, '.wav'
-      type = path.dirname file.path
+      folder = (path.dirname file.relative).split path.sep
       # return metadata
-      name: basename
+      name: path.basename file.path, '.wav'
       author: $.vendor
       vendor: $.vendor
       bankchain: [$.package]
-      types: [
-        ['Drums', type]
-      ]
+      types: switch
+        when folder.length is 2 and folder[0] is 'Instruments'
+          [folder[1..]]
+        when folder.length is 3 and folder[0] is 'Instruments'
+          [folder[1..]]
+        when folder.length is 2 and folder[0] is 'Synthesizers'
+          [["Synth", folder[1]]]
+        when folder.length is 3 and folder[0] is 'Synthesizers'
+          [
+            ["Synth", folder[1]]
+            ["Synth", folder[2].replace /^Moog Modular /, '']
+          ]
+        when folder.length is 2
+          [folder]
+        else
+          throw new Error "unexpected folder structure"
     .pipe gulp.dest $.samples
     .pipe tap -> bar.tick 1, cur: ++count
 
