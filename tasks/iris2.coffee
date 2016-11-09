@@ -39,21 +39,16 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
       vendor: $.vendor
       bankchain: [$.package]
       types: switch
-        when folder.length is 2 and folder[0] is 'Instruments'
+        # don't need 'Instruments' layer
+        when folder.length > 1 and folder[0] is 'Instruments'
           [folder[1..]]
-        when folder.length is 3 and folder[0] is 'Instruments'
-          [folder[1..]]
-        when folder.length is 2 and folder[0] is 'Synthesizers'
-          [["Synth", folder[1]]]
-        when folder.length is 3 and folder[0] is 'Synthesizers'
-          [
-            ["Synth", folder[1]]
-            ["Synth", folder[2].replace /^Moog Modular /, '']
-          ]
-        when folder.length is 2
+        when folder[0] is 'Synthesizers'
+          # reduce for display
+          folder[0] = "Synth"
+          folder[2].replace /^Moog Modular /, '' if folder.length > 2
           [folder]
         else
-          throw new Error "unexpected folder structure"
+          [folder]
     .pipe gulp.dest $.samples
     .pipe tap -> bar.tick 1, cur: ++count
 
