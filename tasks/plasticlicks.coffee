@@ -24,7 +24,7 @@ $ = Object.assign {}, (require '../config'),
 # ======================================================
 #  common tasks  
 # ======================================================
-util.registCommonGulpTasks $
+util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------

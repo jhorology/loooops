@@ -30,7 +30,7 @@ module.exports =
         "find '#{dir}' -name '*#{ext}' | wc -l"
     parseInt (shell.exec cmd, silent: on).stdout
 
-  registCommonGulpTasks: ($) ->
+  registerCommonGulpTasks: ($) ->
     # deploy all
     # --------------------------------
     gulp.task "deploy-#{$.suffix}", (cb) ->
