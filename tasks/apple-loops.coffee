@@ -188,7 +188,7 @@ $ = Object.assign {}, (require '../config'),
       {pattern: / Pizzicato /,       category: 'Strings'}
     ]
     'Jam Pack Voices': [
-      {pattern: /^Ruth background*/, category: 'Vocals', subCategory: 'Female'}
+      {pattern: /^Ruth Background*/, category: 'Vocals', subCategory: 'Female'}
     ]
     'Jam Pack World Music': [
       {pattern: /^African Zebra Log Drum*/, category: 'Percussion'}
