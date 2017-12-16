@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "apple-loops-meta-reader": "0.0.2",
-    "coffeescript": "^2.0.3",
+    "coffeescript": "^2.1.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-coffeelint": "^0.6.0",
@@ -27,5 +27,8 @@
     "shelljs": "^0.7.8",
     "smooth-progress": "^1.1.0",
     "underscore": "^1.8.3"
+  },
+  "dependencies": {
+    "npm-check-updates": "^2.13.0"
   }
 }

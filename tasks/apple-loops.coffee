@@ -282,7 +282,14 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
           # console.warn "#completed bank:#{bank} file:#{fileName} type:#{types}"
         else
           console.warn "#unknown bank:#{bank} file:#{fileName}"
-          types.push 'Unknown' unless types.length
+          types.push 'Unknown'
+      # categolized by folder
+      dirname = path.dirname file.path
+      basename = path.basename file.path
+      if types.length is 2
+        file.path = path.join dirname, types[0], types[1], basename
+      else if types.length is 1
+        file.path = path.join dirname, types[0], basename
       # return metadata
       name: name
       author: author
