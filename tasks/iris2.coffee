@@ -18,8 +18,8 @@ $ = Object.assign {}, (require '../config'),
   suffix: path.basename __filename, '.coffee'
   vendor: 'iZotope'
   package: 'Iris 2 Library'
-  src: '/Library/Application Support/iZotope/Iris 2/Iris 2 Library/Samples'
-  samples: '/Volumes/Macintosh HD/Music/Samples/iZotope/Iris 2 Library'
+  src: '/Volumes/Media/Music/iZotope/Iris 2/Iris 2 Library/Samples'
+  samples: '/Volumes/Media/Music/Samples/iZotope/Iris 2 Library'
 
 # ======================================================
 #  common tasks  

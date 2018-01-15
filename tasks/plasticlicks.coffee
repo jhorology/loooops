@@ -17,8 +17,8 @@ $ = Object.assign {}, (require '../config'),
   suffix: path.basename __filename, '.coffee'
   vendor: 'D16 Group Audio Software'
   package: 'Plasticlicks'
-  src: '/Volumes/Macintosh HD/Apps/DAW/D16/Plasticlicks - Drum Sounds Collection/Wave files and Akai programs.zip'
-  samples: '/Volumes/Macintosh HD/Music/Samples/D16 Group Audio Software/Plasticlicks'
+  src: '/Volumes/Media/Apps/DAW/D16/Plasticlicks - Drum Sounds Collection/Wave files and Akai programs.zip'
+  samples: '/Volumes/Media/Music/Samples/D16 Group Audio Software/Plasticlicks'
 
 
 # ======================================================

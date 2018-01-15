@@ -10,25 +10,25 @@
   "license": "MIT",
   "devDependencies": {
     "apple-loops-meta-reader": "0.0.2",
-    "coffeescript": "^2.1.0",
+    "coffeescript": "^2.1.1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-coffeelint": "^0.6.0",
-    "gulp-exec": "^2.1.3",
+    "gulp-exec": "^3.0.1",
     "gulp-maschine-id3": "0.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-tap": "^1.0.1",
-    "gulp-unzip": "^0.2.0",
+    "gulp-unzip": "^1.0.0",
     "gulp-util": "^3.0.8",
     "js-beautify": "^1.7.5",
     "require-dir": "^0.3.2",
     "riff-reader": "0.0.6",
-    "run-sequence": "^2.2.0",
-    "shelljs": "^0.7.8",
+    "run-sequence": "^2.2.1",
+    "shelljs": "^0.8.0",
     "smooth-progress": "^1.1.0",
     "underscore": "^1.8.3"
   },
   "dependencies": {
-    "npm-check-updates": "^2.13.0"
+    "npm-check-updates": "^2.14.0"
   }
 }

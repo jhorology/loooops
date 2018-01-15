@@ -24,7 +24,7 @@ $ = Object.assign {}, (require '../config'),
   
   src: '/Library/Audio/Apple Loops/Apple'
   # *caution* need around 20G or more disk space.
-  samples: '/Volumes/Macintosh HD/Music/Samples/Apple'
+  samples: '/Volumes/Media/Music/Samples/Apple'
 
   # completion metadata
   completionData:
@@ -199,7 +199,7 @@ $ = Object.assign {}, (require '../config'),
   # -----------------------------------------
 
   # *caution* need around 20G or more disk space.
-  ripped: '/Volumes/Macintosh HD/Temporary/Apple Loops/Apple'
+  ripped: '/Volumes/Media/Temporary/Apple Loops/Apple'
 
 # ======================================================
 #  preparing tasks  
