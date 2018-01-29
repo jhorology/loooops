@@ -57,6 +57,10 @@ $ = Object.assign {}, (require '../config'),
     '07 Chillwave': [
       {pattern: /^Eight Bit Funk Layers/,  category: 'Mixed'}
     ]
+    '14 Future Bass': [
+      {pattern: /^Colossus Riser 02/,   category: 'Texture/Atmosphere'}
+      {pattern: /^Free Fall Snaps 02/,  category: 'Percussion', subCategory: 'Shaker'}
+    ]
     'Jam Pack 1': [
       {pattern: /^Abstract Atmosphere*/,   category: 'Texture/Atmosphere'}
       {pattern: /^Analog Drum Machine*/,   category: 'Drums', subCategory: 'Electronic Beats'}
@@ -144,10 +148,10 @@ $ = Object.assign {}, (require '../config'),
       {pattern: /^Front Porch Dobro*/,     category: 'Guitars', subCategory: 'Acoustic Guitar'}
       {pattern: /^Hardest Working Bass*/,  category: 'Bass', subCategory: 'Electric Bass'}
       {pattern: /^Jaws Harp Jingo Jango*/, category: 'Strings', subCategory: 'Jews Harp'}
-      {pattern: /^Lo Fi Country Drum*/,    category: 'Drum', subCategory: 'Drum Kit'}
+      {pattern: /^Lo Fi Country Drum*/,    category: 'Drums', subCategory: 'Drum Kit'}
       {pattern: /^Nashville Pedal Steel*/, category: 'Guitars', subCategory: 'Pedal Steel Guitar'}
       {pattern: /^Rural Acoustic Strum*/,  category: 'Guitars', subCategory: 'Acoustic Guitar'}
-      {pattern: /^Southern Basic Drumset*/, category: 'Drum', subCategory: 'Drum Kit'}
+      {pattern: /^Southern Basic Drumset*/, category: 'Drums', subCategory: 'Drum Kit'}
       {pattern: /^Southern Fiddle*/,       category: 'Strings'}
     ]
     'Jam Pack Symphony Orchestra': [
