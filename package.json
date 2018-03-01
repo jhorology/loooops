@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "apple-loops-meta-reader": "0.0.2",
-    "coffeescript": "^2.1.1",
+    "coffeescript": "^2.2.2",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-coffeelint": "^0.6.0",
@@ -21,13 +21,12 @@
     "gulp-unzip": "^1.0.0",
     "gulp-util": "^3.0.8",
     "js-beautify": "^1.7.5",
-    "require-dir": "^0.3.2",
+    "require-dir": "^1.0.0",
     "riff-reader": "0.0.6",
     "run-sequence": "^2.2.1",
     "shelljs": "^0.8.1",
     "smooth-progress": "^1.1.0",
     "underscore": "^1.8.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

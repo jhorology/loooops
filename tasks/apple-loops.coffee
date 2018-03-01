@@ -262,12 +262,9 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
       apple = util.readJson "#{(path.join $.ripped, file.relative)[..-5]}.json"
       name = fileName = path.basename file.path, '.wav'
       # add bpm + key to sample name
-      info = []
-      info.push apple.meta?.tempo
-      info.push apple.meta?.keySignature
-      info.push apple.meta?.keyType
-      info = info.filter (i) -> i
-      name += " [#{info.join ' '}]" if info.length
+      name += " [#{apple.meta?.tempo}]" if apple.meta?.tempo
+      name += " #{apple.meta?.keySignature}" if apple.meta?.keySignature
+      name += "m" if apple.meta?.keyType is 'minor'
       # author
       author = apple.information?.artist or $.vendor
       # bank
