@@ -211,12 +211,24 @@ $ = Object.assign {}, (require '../config'),
   ripped: '/Volumes/Media/Temporary/Apple Loops/Apple'
 
 # ======================================================
+#  common tasks  
+# ======================================================
+util.registerCommonGulpTasks $
+
+# ======================================================
 #  preparing tasks  
 # ======================================================
 
+# clean ripped files.
+# --------------------------------
+gulp.task "clean-ripped-#{$.suffix}", (done) ->
+  if shell.test '-e', $.ripped
+    shell.rm '-rf', $.ripped
+  done()
+   
 # convert .caf -> .wav + .json(metadata)
 # --------------------------------
-gulp.task "rip-#{$.suffix}", ["clean-ripped-#{$.suffix}"], ->
+gulp.task "rip-#{$.suffix}", ->
   numFiles = util.countFiles $.src, '.caf'
   throw new Error '.caf files doesn\'t exist' unless numFiles
   count = 0;
@@ -240,20 +252,9 @@ gulp.task "rip-#{$.suffix}", ["clean-ripped-#{$.suffix}"], ->
     .pipe gulp.dest $.ripped
     .pipe tap -> bar.tick 1, cur: ++count
 
-# clean ripped files.
-# --------------------------------
-gulp.task "clean-ripped-#{$.suffix}", ->
-  if shell.test '-e', $.ripped
-    shell.rm '-rf', $.ripped
-
-# ======================================================
-#  common tasks  
-# ======================================================
-util.registerCommonGulpTasks $
-
 # deploy maschine-aware .wav files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
+gulp.task "deploy-#{$.suffix}-samples", ->
   numFiles = util.countFiles $.ripped, '.wav'
   throw new Error 'ripped .wav files doesn\'t exist' unless numFiles
   count = 0;
@@ -306,3 +307,5 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
       modes: apple.meta?.descriptors
     .pipe gulp.dest $.samples
     .pipe tap -> bar.tick 1, cur: ++count
+
+

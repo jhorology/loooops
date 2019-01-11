@@ -28,7 +28,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
+gulp.task "deploy-#{$.suffix}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress

@@ -2,13 +2,13 @@
 # Plasticlicks - Drum Sounds Collection
 #   - 6444 wav files
 #-------------------------------------------------- 
-path     = require 'path'
-gulp     = require 'gulp'
-progress = require 'smooth-progress'
-tap      = require 'gulp-tap'
-unzip    = require 'gulp-unzip'
-id3      = require 'gulp-maschine-id3'
-util     = require '../lib/util'
+path       = require 'path'
+gulp       = require 'gulp'
+progress   = require 'smooth-progress'
+tap        = require 'gulp-tap'
+decompress = require 'gulp-decompress'
+id3        = require 'gulp-maschine-id3'
+util       = require '../lib/util'
 
 $ = Object.assign {}, (require '../config'),
 
@@ -28,7 +28,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
+gulp.task "deploy-#{$.suffix}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress
@@ -36,7 +36,7 @@ gulp.task "deploy-#{$.suffix}-samples", ["clean-#{$.suffix}-samples"], ->
     tmpl: "Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
     width: 40
   gulp.src $.src
-    .pipe unzip {filter: (entry) -> entry.path[-4..] is '.wav'}
+    .pipe decompress {filter: (entry) -> entry.path[-4..] is '.wav'}
     .pipe id3 (file, chunks) ->
       # remove heading "Plasticlicks/"
       file.path = file.path.replace /^Plasticlicks\//, ''

@@ -3,9 +3,11 @@ gulp       = require 'gulp'
 coffeelint = require 'gulp-coffeelint'
 del        = require 'del'
 requireDir = require 'require-dir'
-dir        = requireDir './tasks'
+fwdRef     = require 'undertaker-forward-reference'
 
-allTasks = Object.keys gulp.tasks
+gulp.registry fwdRef()
+dir        = requireDir './tasks'
+allTasks   = gulp.tree().nodes
 
 # coffeelint
 # --------------------------------
@@ -24,7 +26,7 @@ gulp.task 'watch', ->
     './*.coffee'
     './lib/*.coffee'
   ]
-  , ['coffeelint']
+  , gulp.task 'coffeelint'
 
 # clean
 # --------------------------------
@@ -37,13 +39,16 @@ gulp.task 'clean', ->
 
 # clean-all
 # --------------------------------
-gulp.task 'clean-all', ['clean'], ->
-  del [
-    'dist'
-    'temp'
-    'node_modules'
-  ]
+gulp.task 'clean-all',
+  gulp.series 'clean', ->
+    del [
+      'dist'
+      'temp'
+      'node_modules'
+    ]
 
 # deploy all
 # --------------------------------
-gulp.task 'deploy', (("deploy-#{suffix}" for suffix of dir).filter (task) -> task in allTasks)
+gulp.task 'deploy',
+  gulp.series.apply this,
+    (("deploy-#{suffix}" for suffix of dir).filter (task) -> task in allTasks)
