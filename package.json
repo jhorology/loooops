@@ -16,7 +16,7 @@
     "gulp-coffeelint": "^0.6.0",
     "gulp-decompress": "^2.0.2",
     "gulp-exec": "^3.0.2",
-    "gulp-maschine-id3": "0.1.0",
+    "gulp-maschine-id3": "0.1.1",
     "gulp-rename": "^1.4.0",
     "gulp-tap": "^1.0.1",
     "gulp-util": "^3.0.8",
