@@ -76,6 +76,7 @@ module.exports =
     gulp.task "deploy-#{$.suffix}-image", ->
       gulp.src "resources/image/#{$.package.toLowerCase()}/**/*.{json,meta,png}"
         .pipe gulp.dest "#{$.NI.resources}/image/#{$.package.toLowerCase()}"
+        .pipe gulp.dest "#{$.NI.resources}/image/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
   
     # deploy dist_database resources
     #  notes:
@@ -89,6 +90,7 @@ module.exports =
     gulp.task "deploy-#{$.suffix}-dist_database", ->
       gulp.src "resources/dist_database/#{$.package.toLowerCase()}/**/*.{json,meta,png}"
         .pipe gulp.dest "#{$.NI.resources}/dist_database/#{$.package.toLowerCase()}"
+        .pipe gulp.dest "#{$.NI.resources}/dist_database/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
 
     # deploy all resources
     # --------------------------------

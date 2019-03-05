@@ -43,6 +43,7 @@ gulp.task "deploy-#{$.suffix}-samples", ->
       author: $.vendor
       vendor: $.vendor
       bankchain: [$.package]
+      deviceType: 'ONESHOT'
       types: switch
         # don't need 'Instruments' layer
         when folder.length > 1 and folder[0] is 'Instruments'

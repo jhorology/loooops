@@ -302,6 +302,7 @@ gulp.task "deploy-#{$.suffix}-samples", ->
       author: author
       vendor: $.vendor
       comment: apple.information?.comments
+      deviceType: 'LOOP'
       bankchain: [$.package, bank]
       types: [types]
       modes: apple.meta?.descriptors

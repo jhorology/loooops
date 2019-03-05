@@ -47,6 +47,7 @@ gulp.task "deploy-#{$.suffix}-samples", ->
       author: $.vendor
       vendor: $.vendor
       bankchain: [$.package]
+      deviceType: 'ONESHOT'
       types: [
         ['Drums', type]
       ]
