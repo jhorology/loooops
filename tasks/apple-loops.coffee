@@ -302,8 +302,9 @@ gulp.task "deploy-#{$.suffix}-samples", ->
       author: author
       vendor: $.vendor
       comment: apple.information?.comments
-      deviceType: 'LOOP'
+      deviceType: if apple.meta?.tempo then 'LOOP' else 'ONESHOT'
       bankchain: [$.package, bank]
+      tempo: apple.meta?.tempo
       types: [types]
       modes: apple.meta?.descriptors
     .pipe gulp.dest $.samples
