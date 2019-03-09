@@ -102,9 +102,14 @@ module.exports =
     # deploy all
     # --------------------------------
     gulp.task "deploy-#{$.suffix}",
-      gulp.series \
-        "clean-#{$.suffix}",
-        gulp.parallel \
-          "deploy-#{$.suffix}-resources",
+      if $.nks
+        gulp.series \
+          "clean-#{$.suffix}-samples",
           "deploy-#{$.suffix}-samples"
+      else
+        gulp.series \
+          "clean-#{$.suffix}",
+          gulp.parallel \
+            "deploy-#{$.suffix}-resources",
+            "deploy-#{$.suffix}-samples"
       
