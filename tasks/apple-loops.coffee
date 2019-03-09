@@ -18,13 +18,19 @@ $ = Object.assign {}, (require '../config'),
   # required common settings
   # -----------------------------------------
 
-  suffix: path.basename __filename, '.coffee'
+  task: path.basename __filename, '.coffee'
   vendor: 'Apple'
   package: 'Apple Loops'
   
   src: '/Library/Audio/Apple Loops/Apple'
   # *caution* need around 20G or more disk space.
   samples: '/Volumes/Media/Music/Samples/Apple'
+
+  # local settings
+  # -----------------------------------------
+
+  # *caution* need around 20G or more disk space.
+  ripped: '/Volumes/Media/Temporary/Apple Loops/Apple'
 
   # completion metadata
   completionData:
@@ -204,11 +210,6 @@ $ = Object.assign {}, (require '../config'),
       {pattern: /^Persian Market Tar/,     category: 'Percussion'}
     ]
 
-  # local settings
-  # -----------------------------------------
-
-  # *caution* need around 20G or more disk space.
-  ripped: '/Volumes/Media/Temporary/Apple Loops/Apple'
 
 # ======================================================
 #  common tasks  
@@ -221,14 +222,14 @@ util.registerCommonGulpTasks $
 
 # clean ripped files.
 # --------------------------------
-gulp.task "clean-ripped-#{$.suffix}", (done) ->
+gulp.task "clean-ripped-#{$.task}", (done) ->
   if shell.test '-e', $.ripped
     shell.rm '-rf', $.ripped
   done()
    
 # convert .caf -> .wav + .json(metadata)
 # --------------------------------
-gulp.task "rip-#{$.suffix}", ->
+gulp.task "rip-#{$.task}", ->
   numFiles = util.countFiles $.src, '.caf'
   throw new Error '.caf files doesn\'t exist' unless numFiles
   count = 0;
@@ -254,7 +255,7 @@ gulp.task "rip-#{$.suffix}", ->
 
 # deploy maschine-aware .wav files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ->
+gulp.task "deploy-#{$.task}-samples", ->
   numFiles = util.countFiles $.ripped, '.wav'
   throw new Error 'ripped .wav files doesn\'t exist' unless numFiles
   count = 0;

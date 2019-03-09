@@ -14,7 +14,7 @@ $ = Object.assign {}, (require '../config'),
 
   # required common settings
   # -----------------------------------------
-  suffix: path.basename __filename, '.coffee'
+  task: path.basename __filename, '.coffee'
   vendor: 'D16 Group Audio Software'
   package: 'Plasticlicks'
   src: '/Volumes/Media/Apps/DAW/D16/Plasticlicks - Drum Sounds Collection/Wave files and Akai programs.zip'
@@ -28,7 +28,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ->
+gulp.task "deploy-#{$.task}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress

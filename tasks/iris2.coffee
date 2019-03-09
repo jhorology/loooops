@@ -15,7 +15,7 @@ $ = Object.assign {}, (require '../config'),
 
   # required common settings
   # -----------------------------------------
-  suffix: path.basename __filename, '.coffee'
+  task: path.basename __filename, '.coffee'
   vendor: 'iZotope'
   package: 'Iris 2 Library'
   src: '/Volumes/Media/Music/iZotope/Iris 2/Iris 2 Library/Samples'
@@ -28,7 +28,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ->
+gulp.task "deploy-#{$.task}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress

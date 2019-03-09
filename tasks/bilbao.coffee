@@ -1,4 +1,6 @@
-# KORG Gadget 2 Bilbaof factory samples
+# KORG
+# KORG Gadget 2 factory samples - Bilbao
+#   - 511 wav files
 #-------------------------------------------------- 
 path     = require 'path'
 gulp     = require 'gulp'
@@ -15,13 +17,13 @@ $ = Object.assign {}, (require '../config'),
 
   # required common settings
   # -----------------------------------------
-  suffix: path.basename __filename, '.coffee'
+  task: path.basename __filename, '.coffee'
   vendor: 'KORG'
   package: 'Bilbao'
   src: '/Library/Application Support/KORG/Gadget/factory samples/Bilbao'
   samples: '/Volumes/Media/Music/Samples/KORG/Gadget/Bilbao'
   # already have NKS resources
-  nks: on
+  noResources: on
 
   # local settings
   # -----------------------------------------
@@ -44,7 +46,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ->
+gulp.task "deploy-#{$.task}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress

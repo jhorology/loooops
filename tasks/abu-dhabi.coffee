@@ -1,4 +1,6 @@
-# KORG Gadget 2 Abu Dhabi factory samples
+# KORG
+# KORG Gadget 2 factory samples - Abu Dhabi
+#   - 54 wav files
 #-------------------------------------------------- 
 path     = require 'path'
 gulp     = require 'gulp'
@@ -14,13 +16,13 @@ $ = Object.assign {}, (require '../config'),
 
   # required common settings
   # -----------------------------------------
-  suffix: path.basename __filename, '.coffee'
+  task: path.basename __filename, '.coffee'
   vendor: 'KORG'
   package: 'AbuDhabi'
   src: '/Library/Application Support/KORG/Gadget/factory samples/Abu Dhabi/Factory'
   samples: '/Volumes/Media/Music/Samples/KORG/Gadget/Abu Dhabi'
   # already have NKS resources
-  nks: on
+  noResources: on
 
 # ======================================================
 #  common tasks  
@@ -29,7 +31,7 @@ util.registerCommonGulpTasks $
 
 # deploy sample files.
 # --------------------------------
-gulp.task "deploy-#{$.suffix}-samples", ->
+gulp.task "deploy-#{$.task}-samples", ->
   numFiles = util.countFiles $.src, '.wav'
   count = 0;
   bar = progress

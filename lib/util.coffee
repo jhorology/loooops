@@ -30,86 +30,89 @@ module.exports =
     parseInt (shell.exec cmd, silent: on).stdout
 
   registerCommonGulpTasks: ($) ->
+    ###
+      notes:
+        image files should be placed in following directories.
+          maschine before v2.8.0
+            <NI Content location>/NI Resources/image/<root of bankchain>
+          Komplete Kontrol v2.1.0 or later, Maschine v2.8.0 or later
+            <NI Content location>/NI Resources/image/<vendor>/<root of bankchain>
+              
+        dist_database files should be placed in following directories.
+          maschine before v2.8.0
+            <NI Content location>/NI Resources/dist_database/<root of bankchain>
+          Komplete Kontrol v2.1.0 or later, Maschine v2.8.0 or later
+            <NI Content location>/NI Resources/dist_database/<vendor>/<root of bankchain>
+    ###
+    image = "#{$.NI.resources}/image/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
+    dist_database = "#{$.NI.resources}/dist_database/#{$.package.toLowerCase()}"
+    
     # clean sample files.
     # --------------------------------
-    gulp.task "clean-#{$.suffix}-samples", (done) ->
+    gulp.task "clean-#{$.task}-samples", (done) ->
       if shell.test '-e', $.samples
         shell.rm '-rf', $.samples
       done()
+
     # clean image resources
     # --------------------------------
-    gulp.task "clean-#{$.suffix}-image", (done) ->
-      image = "#{$.NI.resources}/image/#{$.package.toLowerCase()}"
+    gulp.task "clean-#{$.task}-image", (done) ->
       if shell.test '-e', image
         shell.rm '-rf', image
       done()
+
     # clean dist_database resources
     # --------------------------------
-    gulp.task "clean-#{$.suffix}-dist_database", (done) ->
-      dist_database = "#{$.NI.resources}/dist_database/#{$.package.toLowerCase()}"
+    gulp.task "clean-#{$.task}-dist_database", (done) ->
       if shell.test '-e', dist_database
         shell.rm '-rf', dist_database
       done()
       
     # clean resource files
     # --------------------------------
-    gulp.task "clean-#{$.suffix}-resources",
+    gulp.task "clean-#{$.task}-resources",
       gulp.parallel \
-        "clean-#{$.suffix}-image",
-        "clean-#{$.suffix}-dist_database"
+        "clean-#{$.task}-image",
+        "clean-#{$.task}-dist_database"
         
     # clean all
     # --------------------------------
-    gulp.task "clean-#{$.suffix}",
+    gulp.task "clean-#{$.task}",
       gulp.parallel \
-        "clean-#{$.suffix}-resources",
-        "clean-#{$.suffix}-samples"
+        "clean-#{$.task}-resources",
+        "clean-#{$.task}-samples"
   
       
     # deploy image resources
-    #  notes:
-    #    maschie doesn't recoginize vendor folder for sample.
-    #    image files should be placed in following directories.
-    #      images for NKSF             - <NI Content location>/NI Resources/image/<vendor>/<root of bankchain>
-    #      images for maschine samples - <NI Content location>/NI Resources/image/<root of bankchain>
     # --------------------------------
-    gulp.task "deploy-#{$.suffix}-image", ->
+    gulp.task "deploy-#{$.task}-image", ->
       gulp.src "resources/image/#{$.package.toLowerCase()}/**/*.{json,meta,png}"
-        .pipe gulp.dest "#{$.NI.resources}/image/#{$.package.toLowerCase()}"
-        .pipe gulp.dest "#{$.NI.resources}/image/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
+        .pipe gulp.dest image
   
     # deploy dist_database resources
-    #  notes:
-    #    maschie doesn't recoginize vendor folder for sample.
-    #    dist_database files should be placed in following directories.
-    #      database resource files for NKSF             -
-    #        <NI Content location>/NI Resources/dist_database/<vendor>/<root of bankchain>
-    #      database resource files for maschine samples -
-    #        <NI Content location>/NI Resources/dist_database/<root of bankchain>
     # --------------------------------
-    gulp.task "deploy-#{$.suffix}-dist_database", ->
+    gulp.task "deploy-#{$.task}-dist_database", ->
       gulp.src "resources/dist_database/#{$.package.toLowerCase()}/**/*.{json,meta,png}"
-        .pipe gulp.dest "#{$.NI.resources}/dist_database/#{$.package.toLowerCase()}"
-        .pipe gulp.dest "#{$.NI.resources}/dist_database/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
+        .pipe gulp.dest dist_database
 
     # deploy all resources
     # --------------------------------
-    gulp.task "deploy-#{$.suffix}-resources",
+    gulp.task "deploy-#{$.task}-resources",
       gulp.parallel \
-        "deploy-#{$.suffix}-image",
-        "deploy-#{$.suffix}-dist_database"
+        "deploy-#{$.task}-image",
+        "deploy-#{$.task}-dist_database"
 
     # deploy all
     # --------------------------------
-    gulp.task "deploy-#{$.suffix}",
-      if $.nks
+    gulp.task "deploy-#{$.task}",
+      if $.noResources
         gulp.series \
-          "clean-#{$.suffix}-samples",
-          "deploy-#{$.suffix}-samples"
+          "clean-#{$.task}-samples",
+          "deploy-#{$.task}-samples"
       else
         gulp.series \
-          "clean-#{$.suffix}",
+          "clean-#{$.task}",
           gulp.parallel \
-            "deploy-#{$.suffix}-resources",
-            "deploy-#{$.suffix}-samples"
+            "deploy-#{$.task}-resources",
+            "deploy-#{$.task}-samples"
       
