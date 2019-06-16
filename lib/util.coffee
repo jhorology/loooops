@@ -45,7 +45,7 @@ module.exports =
             <NI Content location>/NI Resources/dist_database/<vendor>/<root of bankchain>
     ###
     image = "#{$.NI.resources}/image/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
-    dist_database = "#{$.NI.resources}/dist_database/#{$.package.toLowerCase()}"
+    dist_database = "#{$.NI.resources}/dist_database/#{$.vendor.toLowerCase()}/#{$.package.toLowerCase()}"
     
     # clean sample files.
     # --------------------------------
