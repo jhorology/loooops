@@ -36,32 +36,34 @@ gulp.task "deploy-#{$.task}-samples", ->
     width: 40
   gulp.src ["#{$.src}/**/*.wav"]
     .pipe id3 (file, chunks) ->
-      basename = path.basename file.path, '.wav'
-      tempo = parseInt (basename.split '_')[1]
-      mode = if basename.startsWith 'D_100_' then 'Distorted' else 'clean'
+      names = (path.basename file.path, '.wav').split '_'
       type = ['Drums']
       soundInfo = {}
       if file.relative.startsWith 'Audio Loops'
         soundInfo.deviceType = 'LOOP'
-        soundInfo.tempo = parseInt (basename.match /_([0-9]*)bpm/)[1]
+        soundInfo.tempo = parseInt (names[1].match /([0-9]*)bpm/)[1]
+        soundInfo.name = "#{names[2]}[#{soundInfo.tempo}] #{names[0]}"
       else
+        soundInfo.name = names.reverse().join ' '
+        if names[0] is 'OmarHakim.Fade' and names[1] is 'China'
+          soundInfo.name = 'OmarHakim ChinaFade'
         soundInfo.deviceType = 'ONESHOT'
         type.push switch
-          when basename.match /Snare/ then 'Snare'
-          when basename.match /China/ then 'China Cymbal'
-          when basename.match /Crash/ then 'Crash Cymbal'
-          when basename.match /Splash/ then 'Crash Cymbal'
-          when basename.match /CrossStick/ then 'Snare Rimshot'
-          when basename.match /HatClosed/ then 'Hi-Hat Closed'
-          when basename.match /HatFoot/ then 'Hi-Hat Pedal'
-          when basename.match /HatOpen/ then 'Hi-Hat Open'
-          when basename.match /Kick/ then 'Kick'
-          when basename.match /RideBell/ then 'Ride Bell'
-          when basename.match /Ride/ then 'Ride Cymbal'
-          when basename.match /Tom/ then 'Tom'
+          when names[1].match /Snare/ then 'Snare'
+          when names[1].match /China/ then 'China Cymbal'
+          when names[1].match /Crash/ then 'Crash Cymbal'
+          when names[1].match /Splash/ then 'Crash Cymbal'
+          when names[1].match /CrossStick/ then 'Snare Rimshot'
+          when names[1].match /HatClosed/ then 'Hi-Hat Closed'
+          when names[1].match /HatFoot/ then 'Hi-Hat Pedal'
+          when names[1].match /HatOpen/ then 'Hi-Hat Open'
+          when names[1].match /Kick/ then 'Kick'
+          when names[1].match /RideBell/ then 'Ride Bell'
+          when names[1].match /Ride/ then 'Ride Cymbal'
+          when names[1].match /Tom/ then 'Tom'
+          else throw new Error "unknown type [#{names[1]}]"
       # return metadata
       Object.assign soundInfo,
-        name: basename
         author: 'Omar Hakim'
         vendor: $.vendor
         bankchain: [$.package]
