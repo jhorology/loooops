@@ -51,7 +51,7 @@ gulp.task "deploy-#{$.task}-samples", ->
           when names[1].match /China/ then 'China Cymbal'
           when names[1].match /Crash/ then 'Crash Cymbal'
           when names[1].match /Splash/ then 'Crash Cymbal'
-          when names[1].match /CrossStick/ then 'Snare Rimshot'
+          when names[1].match /CrossStick/ then 'Cross Stick'
           when names[1].match /HatClosed/ then 'Hi-Hat Closed'
           when names[1].match /HatFoot/ then 'Hi-Hat Pedal'
           when names[1].match /HatOpen/ then 'Hi-Hat Open'

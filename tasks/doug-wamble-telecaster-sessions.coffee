@@ -37,10 +37,11 @@ gulp.task "deploy-#{$.task}-samples", ->
   gulp.src ["#{$.src}/**/*.wav"]
     .pipe id3 (file, chunks) ->
       basename = path.basename file.path, '.wav'
-      tempo = parseInt (basename.split '_')[1]
+      names = basename.split '_'
+      tempo = parseInt names[1]
       mode = if basename.startsWith 'D_100_' then 'Distorted' else 'clean'
       # return metadata
-      name: basename
+      name: "#{names[3]}[#{names[1]}] #{names[0]} #{names[2]} #{names[4]}"
       author: 'Doug Wamble'
       vendor: $.vendor
       bankchain: [$.package]
