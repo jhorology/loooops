@@ -8,7 +8,9 @@ progress   = require 'smooth-progress'
 tap        = require 'gulp-tap'
 decompress = require 'gulp-decompress'
 id3        = require 'gulp-maschine-id3'
+gulpif     = require 'gulp-if'
 util       = require '../lib/util'
+removeSilence = require '../lib/gulp-remove-silence'
 
 $ = Object.assign {}, (require '../config'),
 
@@ -36,12 +38,17 @@ gulp.task "deploy-#{$.task}-samples", ->
     tmpl: "Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
     width: 40
   gulp.src ["#{$.src}/**/*.{wav,WAV}"]
-    .pipe id3 (file, chunks) ->
+    .pipe gulpif (file) ->
+      file.relative.match /^OneShot_Samples/
+    , removeSilence threshold: '-70dB'
+    .pipe gulpif (file) ->
+       file.extname is '.wav' or file.extname is '.WAV'
+    , id3 (file, chunks) ->
       file.extname = '.wav'
       names = (path.basename file.path, '.wav').split '_'
       type = ['Drums']
       soundInfo = {}
-      if file.relative.startsWith 'OneShot_Samples'
+      if file.relative.match /^OneShot_Samples/
         soundInfo.deviceType = 'ONESHOT'
         soundInfo.name = 'SimonPhillips ' + names.join ' '
         type.push switch

@@ -7,7 +7,9 @@ gulp       = require 'gulp'
 progress   = require 'smooth-progress'
 tap        = require 'gulp-tap'
 id3        = require 'gulp-maschine-id3'
+gulpif     = require 'gulp-if'
 util       = require '../lib/util'
+removeSilence = require '../lib/gulp-remove-silence'
 
 $ = Object.assign {}, (require '../config'),
 
@@ -34,16 +36,27 @@ gulp.task "deploy-#{$.task}-samples", ->
     total: numFiles
     tmpl: "Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
     width: 40
-  gulp.src ["#{$.src}/**/*.wav"]
-    .pipe id3 (file, chunks) ->
+  gulp.src ["#{$.src}/**/*.{wav,mid}"]
+    .pipe gulpif (file) ->
+      file.relative.match /^Samples/
+    , removeSilence threshold: '-70dB'
+    .pipe gulpif (file) ->
+       file.extname is '.mid'
+    , tap (file) ->
+      names = (path.basename file.path, '.mid').split '_'
+      tempo = parseInt (names[1].match /([0-9]*)bpm/)[1]
+      file.basename = "#{names[2]}[#{tempo}] #{names[0].replace /^MIDI /, ''}.mid"
+    .pipe gulpif (file) ->
+       file.extname is '.wav'
+    , id3 (file, chunks) ->
       names = (path.basename file.path, '.wav').split '_'
       type = ['Drums']
       soundInfo = {}
-      if file.relative.startsWith 'Audio Loops'
+      if file.relative.match /^Audio Loops/
         soundInfo.deviceType = 'LOOP'
         soundInfo.tempo = parseInt (names[1].match /([0-9]*)bpm/)[1]
         soundInfo.name = "#{names[2]}[#{soundInfo.tempo}] #{names[0]}"
-      else
+      else if file.relative.match /^Samples/
         soundInfo.name = names.reverse().join ' '
         if names[0] is 'OmarHakim.Fade' and names[1] is 'China'
           soundInfo.name = 'OmarHakim ChinaFade'
@@ -62,6 +75,8 @@ gulp.task "deploy-#{$.task}-samples", ->
           when names[1].match /Ride/ then 'Ride Cymbal'
           when names[1].match /Tom/ then 'Tom'
           else throw new Error "unknown type [#{names[1]}]"
+      else
+        throw new Error "unknown folder. [#{file.relative}]"
       # return metadata
       Object.assign soundInfo,
         author: 'Omar Hakim'
@@ -70,5 +85,6 @@ gulp.task "deploy-#{$.task}-samples", ->
         types: [type]
         modes: ['Acoustic', 'Human']
     .pipe gulp.dest $.samples
-    .pipe tap -> bar.tick 1, cur: ++count
-
+    .pipe gulpif (file) ->
+       file.extname is '.wav'
+    , tap -> bar.tick 1, cur: ++count

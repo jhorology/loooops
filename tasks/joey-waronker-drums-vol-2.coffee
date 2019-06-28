@@ -7,7 +7,9 @@ gulp       = require 'gulp'
 progress   = require 'smooth-progress'
 tap        = require 'gulp-tap'
 id3        = require 'gulp-maschine-id3'
+gulpif     = require 'gulp-if'
 util       = require '../lib/util'
+removeSilence = require '../lib/gulp-remove-silence'
 
 $ = Object.assign {}, (require '../config'),
 
@@ -35,6 +37,9 @@ gulp.task "deploy-#{$.task}-samples", ->
     tmpl: "Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
     width: 40
   gulp.src ["#{$.src}/**/*.wav"]
+    .pipe gulpif (file) ->
+      file.relative.match /^Samples/
+    , removeSilence threshold: '-70dB'
     .pipe id3 (file, chunks) ->
       names = (path.basename file.path, '.wav').split '_'
       dirname = path.dirname file.relative
