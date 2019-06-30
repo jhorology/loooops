@@ -31,6 +31,9 @@ $ = Object.assign {}, (require '../config'),
 
   # *caution* need around 20G or more disk space.
   ripped: '/Volumes/Media/Temporary/Apple Loops/Apple'
+  #  use Caf Midi Extractor - Utility Program
+  #  https://www.logicprohelp.com/forum/viewtopic.php?t=139415
+  midiFiles: '/Volumes/Media/Temporary/Apple Loops/Caf Midi Extractor Files'
 
   # completion metadata
   completionData:
@@ -308,6 +311,53 @@ gulp.task "deploy-#{$.task}-samples", ->
       tempo: apple.meta?.tempo
       types: [types]
       modes: apple.meta?.descriptors
+    .pipe gulp.dest $.samples
+    .pipe tap -> bar.tick 1, cur: ++count
+
+
+# deploy maschine-aware .wav files.
+# --------------------------------
+gulp.task "deploy-#{$.task}-midi-files", ->
+  numFiles = util.countFiles $.midiFiles, '.mid'
+  throw new Error 'ripped .mid files doesn\'t exist' unless numFiles
+  count = 0;
+  bar = progress
+    total: numFiles
+    tmpl: " Deploying files... [:bar] :cur/#{numFiles} :percent :eta"
+    width: 40
+  gulp.src ["#{$.midiFiles}/**/*.mid"]
+    .pipe tap (file) ->
+      basename = path.basename file.path, '.caf.mid'
+      relativeDir = path.dirname file.relative
+      # read apple loops metadata
+      apple = util.readJson (path.join $.ripped, relativeDir, basename) + '.json'
+      name = basename
+      # add bpm + key to sample name
+      name += " [#{apple.meta?.tempo}]" if apple.meta?.tempo
+      name += " #{apple.meta?.keySignature}" if apple.meta?.keySignature
+      name += "m" if apple.meta?.keyType is 'minor'
+      # bank
+      bank = (file.relative.split path.sep)[0]
+      # bank = (file.relative.split path.sep)[0].replace /^[0-9][0-9] (.*)$/, '$1'
+      # category
+      types = []
+      types.push apple.meta.category if apple.meta?.category
+      types.push apple.meta.subcategory if apple.meta?.subcategory
+      unless types.length
+        defs = $.completionData[bank]
+        def = _.find defs, (def)-> def.pattern.test basename if defs
+        if (def)
+          types.push def.category if def.category
+          types.push def.subCategory if def.subCategory
+        else
+          console.warn "#unknown bank:#{bank} file:#{basename}"
+          types.push 'Unknown'
+      # categolized by folder
+      dirname = path.dirname file.path
+      if types.length is 2
+        file.path = path.join dirname, types[0], types[1], name + '.mid'
+      else if types.length is 1
+        file.path = path.join dirname, types[0], name + '.mid'
     .pipe gulp.dest $.samples
     .pipe tap -> bar.tick 1, cur: ++count
 
