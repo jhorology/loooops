@@ -1,3 +1,9 @@
+# Logic X Apple loops
+#
+# notes:
+#   - 2019/12/26  v10.4.8 23671 .caf files 
+#                          6489 MIDI files
+#-------------------------------------------------- 
 path     = require 'path'
 gulp     = require 'gulp'
 progress = require 'smooth-progress'
@@ -69,11 +75,14 @@ $ = Object.assign {}, (require '../config'),
       {pattern: /^Paparazzi FX Synth/,    category: 'Sound Effect', subCategory: 'Motions & Transitions'}
     ]
     '07 Chillwave': [
-      {pattern: /^Eight Bit Funk Layers/,  category: 'Mixed'}
+      {pattern: /^Eight Bit Funk Layers/, category: 'Mixed'}
     ]
     '14 Future Bass': [
-      {pattern: /^Colossus Riser 02/,   category: 'Texture/Atmosphere'}
-      {pattern: /^Free Fall Snaps 02/,  category: 'Percussion', subCategory: 'Shaker'}
+      {pattern: /^Colossus Riser 02/,     category: 'Texture/Atmosphere'}
+      {pattern: /^Free Fall Snaps 02/,    category: 'Percussion', subCategory: 'Shaker'}
+    ]
+    '18 Toy Box': [
+      {pattern: /^Planetarium FX/,        category: 'Sound Effect', subCategory: 'Sci-Fi'}
     ]
     'Jam Pack 1': [
       {pattern: /^Abstract Atmosphere/,   category: 'Texture/Atmosphere'}
