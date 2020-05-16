@@ -3,6 +3,8 @@
 # notes:
 #   - 2019/12/26  v10.4.8 23671 .caf files 
 #                          6489 MIDI files
+#   - 2020/05/16  v10.4.8 26107 .caf files 
+#                          7033 MIDI files
 #-------------------------------------------------- 
 path     = require 'path'
 gulp     = require 'gulp'
@@ -42,6 +44,7 @@ $ = Object.assign {}, (require '../config'),
   midiFiles: '/Volumes/Media/Temporary/Apple Loops/Caf Midi Extractor Files'
 
   # completion metadata
+  # some apple loops files doesn't have metadata 
   completionData:
     '01 Hip Hop': [
       {pattern: /^Future Flight/, category: 'Sound Effect', subCategory: 'Sci-Fi'}
