@@ -16,10 +16,12 @@ $ = Object.assign {}, (require '../config'),
   # required common settings
   # -----------------------------------------
   task: path.basename __filename, '.coffee'
-  vendor: 'iZotope'
-  package: 'Iris 2 Library'
+  vendor: 'iZotope, Inc.'
+  package: 'iZotope Iris 2'
   src: '/Volumes/Media/Music/iZotope/Iris 2/Iris 2 Library/Samples'
-  samples: '/Volumes/Media/Music/Samples/iZotope/Iris 2 Library'
+  samples: '/Volumes/Media/Music/Samples/iZotope/iZotope Iris 2'
+  # already have NKS resources
+  noResources: on
 
 # ======================================================
 #  common tasks  
@@ -39,6 +41,7 @@ gulp.task "deploy-#{$.task}-samples", ->
     .pipe id3 (file, chunks) ->
       folder = (path.dirname file.relative).split path.sep
       # return metadata
+      console.log file.path, $.package
       name: path.basename file.path, '.wav'
       author: $.vendor
       vendor: $.vendor
