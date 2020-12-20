@@ -5,6 +5,8 @@
 #                          6489 MIDI files
 #   - 2020/05/16  v10.4.8 26107 .caf files 
 #                          7033 MIDI files
+#   - 2020/12/21  v10.6.1 26343 .caf files
+#                          7255 MIDI files
 #-------------------------------------------------- 
 path     = require 'path'
 gulp     = require 'gulp'
@@ -256,9 +258,9 @@ gulp.task "rip-#{$.task}", ->
     .pipe tap (file) ->
       file.distPath = (path.join $.ripped, file.relative)[..-5] + '.wav'
       file.distDir = path.dirname file.distPath
-    .pipe exec [
-      'mkdir -p "<%= file.distDir %>"'
-      'afconvert -f WAVE -d LEI16 "<%= file.path %>" "<%= file.distPath %>"'
+    .pipe exec (file) -> [
+        "mkdir -p \"#{file.distDir}\""
+        "afconvert -f WAVE -d LEI16 \"#{file.path}\" \"#{file.distPath}\""
       ].join ' && '
     , $.execOpts
     .pipe exec.reporter $.execReportOpts
